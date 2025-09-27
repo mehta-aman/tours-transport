@@ -29,7 +29,7 @@
         </div>
         <div class="hero-stats" data-aos="fade-up" data-aos-delay="500">
             <div class="stat-item">
-                <span class="stat-number">22+</span>
+                <span class="stat-number">65+</span>
                 <span class="stat-label-white ">Years Experience</span>
             </div>
             <div class="stat-item">
@@ -418,7 +418,7 @@
                 <div class="stat-icon">
                     <i class="fas fa-calendar-alt"></i>
                 </div>
-                <div class="stat-number" data-count="22">0</div>
+                <div class="stat-number" data-count="65">0</div>
                 <div class="stat-label">Years of Experience</div>
                 <div class="stat-desc">Decades of trusted service excellence</div>
             </div>
@@ -620,7 +620,7 @@
 
 .hero-btn.secondary:hover {
     background: #fff;
-    color: #1976D2;
+    color: #FF7A00;
 }
 
 .hero-stats {
@@ -1230,7 +1230,7 @@
 
 .cta-btn.primary {
     background: #fff;
-    color: #1976D2;
+    color: #FF7A00;
 }
 
 .cta-btn.primary:hover {
@@ -1246,7 +1246,7 @@
 
 .cta-btn.secondary:hover {
     background: #fff;
-    color: #1976D2;
+    color: #FF7A00;
 }
 
     /* Responsive Design */
@@ -1679,66 +1679,51 @@
 }
 
 </style>
-
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     // Hero Background Slider
     const sliderImages = [
-        '/images/slide1.jpg',
-        '/images/slide2.jpg',
-        '/images/slide3.jpg',
-        '/images/slide4.jpg',
-        '/images/slide5.jpg',
-        '/images/slide6.jpg'
+        '/images/slide1.jpg', '/images/slide2.jpg', '/images/slide3.jpg',
+        '/images/slide4.jpg', '/images/slide5.jpg', '/images/slide6.jpg'
     ];
-
-    // Preload images for smoother transitions
-    sliderImages.forEach(src => {
-        const img = new Image();
-        img.src = src;
-    });
-
+    sliderImages.forEach(src => { const img = new Image(); img.src = src; });
     let currentImage = 0;
     const heroBg = document.getElementById("hero-bg");
-    if (!heroBg) return;  // Element not found, avoid errors
-
-    function updateSlider() {
-        heroBg.style.backgroundImage = `url('${sliderImages[currentImage]}')`;
-    }
-
-    function nextSlide() {
-        currentImage = (currentImage + 1) % sliderImages.length;
+    if (heroBg) {
+        function updateSlider() {
+            heroBg.style.backgroundImage = `url('${sliderImages[currentImage]}')`;
+        }
+        function nextSlide() {
+            currentImage = (currentImage + 1) % sliderImages.length;
+            updateSlider();
+        }
         updateSlider();
+        setInterval(nextSlide, 4000);
     }
 
-    updateSlider();
-    setInterval(nextSlide, 4000);
-
-    // Counter Animation for Stats
+    // Counter Animation - supports suffix and triggers only when in view
     const counters = document.querySelectorAll('.stat-number');
-    
-    const animateCounter = (counter) => {
-        const target = parseInt(counter.getAttribute('data-count'));
-        const duration = 2000; // 2 seconds
-        const increment = target / (duration / 16); // 60fps
-        let current = 0;
-        
-        const updateCounter = () => {
-            current += increment;
-            if (current < target) {
-                counter.textContent = Math.floor(current).toLocaleString();
-                requestAnimationFrame(updateCounter);
+    const animateCounter = counter => {
+        const raw = counter.getAttribute('data-count') || counter.textContent;
+        const target = parseInt(raw.replace(/[^\d]/g, '')) || 0;
+        const suffix = raw.replace(/\d+/g, '');
+        const duration = 1800;
+        const increment = Math.max(1, Math.ceil(target/(duration/20)));
+        let count = 0;
+        function update() {
+            count += increment;
+            if (count < target) {
+                counter.textContent = count.toLocaleString() + suffix;
+                requestAnimationFrame(update);
             } else {
-                counter.textContent = target.toLocaleString();
+                counter.textContent = target.toLocaleString() + suffix;
             }
-        };
-        
-        updateCounter();
+        }
+        counter.textContent = '0' + suffix;
+        update();
     };
-    
-    // Intersection Observer for counter animation
-    const observer = new IntersectionObserver((entries) => {
+    const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 animateCounter(entry.target);
@@ -1746,96 +1731,25 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }, { threshold: 0.5 });
-    
-    counters.forEach(counter => {
-        observer.observe(counter);
-    });
-    
+    counters.forEach(counter => observer.observe(counter));
+
     // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
             const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
+            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
     });
 
-    // Add hover effects to service cards
-    const serviceCards = document.querySelectorAll('.service-card');
-    serviceCards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-10px)';
-        });
-        
-        card.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0)';
-        });
-    });
-
-    // Add hover effects to package cards
-    const packageCards = document.querySelectorAll('.package-card');
-    packageCards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-10px)';
-        });
-        
-        card.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0)';
-        });
-    });
-
-    // Add hover effects to highlight cards
-    const highlightCards = document.querySelectorAll('.highlight-card');
-    highlightCards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-10px)';
-        });
-        
-        card.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0)';
+    // Hover effects for cards (service/package/highlight)
+    ['service-card','package-card','highlight-card'].forEach(type => {
+        document.querySelectorAll(`.${type}`).forEach(card => {
+            card.addEventListener('mouseenter', () => card.style.transform = 'translateY(-10px)');
+            card.addEventListener('mouseleave', () => card.style.transform = 'translateY(0)');
         });
     });
 });
 </script>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // Select all stat number elements
-        const stats = document.querySelectorAll('.stat-number');
-    
-        stats.forEach(stat => {
-            // Get the target number from the element's inner text and sanitize it
-            let target = stat.textContent.replace(/[^\d]/g, '');
-            let suffix = stat.textContent.replace(/\d+/g, ''); // e.g., 'K+', '+'
-            if (!target) return; // Skip if no number
-    
-            target = parseInt(target);
-    
-            let count = 0;
-            let duration = 1500; // milliseconds
-            let increment = Math.ceil(target / (duration / 20));
-    
-            function updateStat() {
-                count += increment;
-    
-                if (count < target) {
-                    stat.textContent = count + suffix;
-                    setTimeout(updateStat, 20);
-                } else {
-                    stat.textContent = target + suffix;
-                }
-            }
-    
-            // Reset stat temporarily so animation is visible every time
-            stat.textContent = '0' + suffix;
-            updateStat();
-        });
-    });
-    </script>
-    
 @endpush
+

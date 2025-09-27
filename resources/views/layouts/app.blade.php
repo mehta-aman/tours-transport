@@ -280,15 +280,15 @@
                         From heavy-duty transport to luxury car rentals and tour packages.
                     </p>
                     <div class="footer-contact-info">
-                        <div class="contact-item">
+                        <div class="footer-contact-item">
                             <i class="fas fa-phone"></i>
                             <a href="tel:+916351505076">+91 63515 05076</a>
                         </div>
-                        <div class="contact-item">
+                        <div class="footer-contact-item">
                             <i class="fas fa-envelope"></i>
                             <a href="mailto:contact@arihanttransport.com">contact@arihanttransport.com</a>
                         </div>
-                        <div class="contact-item">
+                        <div class="footer-contact-item">
                             <i class="fas fa-map-marker-alt"></i>
                             <span>Sector 8, Gandhinagar, Gujarat 382007</span>
                         </div>
@@ -607,27 +607,27 @@
     gap: 0.8rem;
 }
 
-.contact-item {
+.footer-contact-item {
     display: flex;
-    align-items: flex-start
+    align-items: center;
     gap: 0.8rem;
     color: #ccd6e1;
     font-size: 0.95rem;
 }
 
-.contact-item i {
+.footer-contact-item i {
     color: #FF7A00;
     width: 16px;
     text-align: center;
 }
 
-.contact-item a {
+.footer-contact-item a {
     color: #ccd6e1;
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
-.contact-item a:hover {
+.footer-contact-item a:hover {
     color: #FF7A00;
 }
 
@@ -823,7 +823,7 @@
     .footer-description{
         font-size: .8rem;
     }
-    .footer-contact-info .contact-item {
+    .footer-contact-info .footer-contact-item {
         margin-bottom: 7px;
         font-size: .8em;
     }

@@ -866,7 +866,7 @@
 
 .cta-btn.primary {
     background: #fff;
-    color: #1976D2;
+    color: #FF7A00
 }
 
 .cta-btn.primary:hover {
@@ -882,7 +882,7 @@
 
 .cta-btn.secondary:hover {
     background: #fff;
-    color: #1976D2;
+    color: #FF7A00;
 }
 
 .cta-btn i {

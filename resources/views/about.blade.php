@@ -24,16 +24,16 @@
             </p>
             <div class="about-hero-stats" data-aos="fade-up" data-aos-delay="400">
                 <div class="stat-item">
-                    <span class="stat-number">22+</span>
-                    <span class="stat-label">Years Experience</span>
+                    <span class="stat-number"  data-count="65" data-type="plus">0</span>
+                    <span class="stat-label-white">Years Experience</span>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-number">50K+</span>
-                    <span class="stat-label">Deliveries</span>
+                    <span class="stat-number"  data-count="50000" data-type="k">0</span>
+                    <span class="stat-label-white">Deliveries</span>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-number">100+</span>
-                    <span class="stat-label">Fleet Vehicles</span>
+                    <span class="stat-number"  data-count="100" data-type="plus">0</span>
+                    <span class="stat-label-white">Fleet Vehicles</span>
                 </div>
             </div>
         </div>
@@ -86,7 +86,7 @@
                             <span>Nationwide Coverage</span>
                         </div>
                     </div>
-                    <a href="#contact" class="story-btn">
+                    <a href="#contact" class="primary-btn">
                         <span>Get In Touch</span>
                         <i class="fas fa-arrow-right"></i>
                     </a>
@@ -256,7 +256,7 @@
                     <div class="stat-icon">
                         <i class="fas fa-calendar-alt"></i>
                     </div>
-                    <div class="stat-number" data-count="22">0</div>
+                    <div class="stat-number" data-count="65">0</div>
                     <div class="stat-label">Years of Experience</div>
                     <div class="stat-desc">Decades of trusted service excellence</div>
                 </div>
@@ -321,7 +321,7 @@
                             <a href="mailto:contact@arihanttransport.com">contact@arihanttransport.com</a>
                         </div>
                     </div>
-                    <a href="https://maps.app.goo.gl/obXWBkFWWVkAsQ1r6" target="_blank" class="office-btn">
+                    <a href="https://maps.app.goo.gl/obXWBkFWWVkAsQ1r6" target="_blank" class="primary-btn">
                         <i class="fas fa-directions"></i>
                         Get Directions
                     </a>
@@ -351,7 +351,7 @@
                             <a href="mailto:ahd@arihanttransport.com">ahd@arihanttransport.com</a>
                         </div>
                     </div>
-                    <a href="https://maps.app.goo.gl/obXWBkFWWVkAsQ1r6" target="_blank" class="office-btn">
+                    <a href="https://maps.app.goo.gl/obXWBkFWWVkAsQ1r6" target="_blank" class="primary-btn">
                         <i class="fas fa-directions"></i>
                         Get Directions
                     </a>
@@ -380,7 +380,7 @@
                             <a href="mailto:contact@arihanttransport.com">contact@arihanttransport.com</a>
                         </div>
                     </div>
-                    <a href="https://maps.app.goo.gl/obXWBkFWWVkAsQ1r6" target="_blank" class="office-btn">
+                    <a href="https://maps.app.goo.gl/obXWBkFWWVkAsQ1r6" target="_blank" class="primary-btn">
                         <i class="fas fa-directions"></i>
                         Get Directions
                     </a>
@@ -410,7 +410,7 @@
                             <a href="mailto:ahd@arihanttransport.com">ahd@arihanttransport.com</a>
                         </div>
                     </div>
-                    <a href="https://maps.app.goo.gl/obXWBkFWWVkAsQ1r6" target="_blank" class="office-btn">
+                    <a href="https://maps.app.goo.gl/obXWBkFWWVkAsQ1r6" target="_blank" class="primary-btn">
                         <i class="fas fa-directions"></i>
                         Get Directions
                     </a>
@@ -626,9 +626,9 @@
             transition: opacity 0.3s ease;
         }
 
-        .image-container:hover .image-overlay {
+        /* .image-container:hover .image-overlay {
             opacity: 1;
-        }
+        } */
 
         .play-button {
             width: 80px;
@@ -1588,59 +1588,126 @@
         }
     </style>
 
-    @push('scripts')
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                // Counter Animation for Stats
-                const counters = document.querySelectorAll('.stat-number');
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // Counter Animation for Stats Section
+    const counters = document.querySelectorAll('.stat-number');
 
-                const animateCounter = (counter) => {
-                    const target = parseInt(counter.getAttribute('data-count'));
-                    const duration = 2000; // 2 seconds
-                    const increment = target / (duration / 16); // 60fps
-                    let current = 0;
+    function animateCounter(counter) {
+        const target = Number(counter.getAttribute('data-count'));
+        const duration = 2000;
+        const steps = Math.floor(duration / 16);
+        const increment = target / steps;
+        let current = 0;
 
-                    const updateCounter = () => {
-                        current += increment;
-                        if (current < target) {
-                            counter.textContent = Math.floor(current).toLocaleString();
-                            requestAnimationFrame(updateCounter);
-                        } else {
-                            counter.textContent = target.toLocaleString();
-                        }
-                    };
+        function updateCounter() {
+            current += increment;
+            if (current < target) {
+                counter.textContent = Math.floor(current).toLocaleString();
+                requestAnimationFrame(updateCounter);
+            } else {
+                counter.textContent = target.toLocaleString();
+            }
+        }
+        updateCounter();
+    }
 
-                    updateCounter();
-                };
-
-                // Intersection Observer for counter animation
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            animateCounter(entry.target);
-                            observer.unobserve(entry.target);
-                        }
-                    });
-                }, { threshold: 0.5 });
-
-                counters.forEach(counter => {
-                    observer.observe(counter);
-                });
-
-                // Smooth scrolling for anchor links
-                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                    anchor.addEventListener('click', function (e) {
-                        e.preventDefault();
-                        const target = document.querySelector(this.getAttribute('href'));
-                        if (target) {
-                            target.scrollIntoView({
-                                behavior: 'smooth',
-                                block: 'start'
-                            });
-                        }
-                    });
-                });
+    // Animate when visible using IntersectionObserver, fallback on load
+    if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounter(entry.target);
+                    observer.unobserve(entry.target);
+                }
             });
-        </script>
-    @endpush
+        }, { threshold: 0.5 });
+        counters.forEach(counter => observer.observe(counter));
+    } else {
+        counters.forEach(counter => animateCounter(counter));
+    }
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                e.preventDefault();
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+});
+
+</script>
+@endpush
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    function formatCount(count, type) {
+        if (type === 'k') {
+            // Show K suffix, rounding as needed
+            return (Math.round((count / 100) ) / 10).toFixed(1).replace('.0','') + 'K';
+        }
+        if (type === 'plus') {
+            return count.toLocaleString() + '+';
+        }
+        return count.toLocaleString();
+    }
+
+    function animateCounter(counter) {
+        const target = Number(counter.getAttribute('data-count'));
+        const type = counter.getAttribute('data-type') || '';
+        if(isNaN(target) || target <= 0) {
+            counter.textContent = type === 'k' ? '0K' : (type === 'plus' ? '0+' : '0');
+            return;
+        }
+        const duration = 2000;
+        const steps = Math.floor(duration / 16);
+        const increment = target / steps;
+        let current = 0;
+
+        function updateCounter() {
+            current += increment;
+            if (current < target) {
+                counter.textContent = formatCount(Math.floor(current), type);
+                requestAnimationFrame(updateCounter);
+            } else {
+                counter.textContent = formatCount(target, type);
+            }
+        }
+        updateCounter();
+    }
+
+    const counters = document.querySelectorAll('.stat-number');
+    if ('IntersectionObserver' in window && counters.length) {
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounter(entry.target);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        counters.forEach(counter => observer.observe(counter));
+    } else {
+        counters.forEach(counter => animateCounter(counter));
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                e.preventDefault();
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+});
+</script>
+@endpush
+
+
 @endsection
